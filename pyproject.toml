@@ -1,6 +1,6 @@
 [project]
 name = "pretty-json-loguru"
-version = "0.2.0"
+version = "0.2.1"
 description = "Pretty json logs in loguru"
 readme = "README.md"
 requires-python = ">=3.8"
