@@ -35,11 +35,11 @@ from typing import Literal, List
 
 
 def setup_json_loguru(
-	level: str = "DEBUG",
-	traceback: Literal["attach", "extra", "drop"] = "attach",
-	colorize: bool = True,
-	remove_existing_sinks: bool = True,
-	keys: List[Literal["ts", "module", "msg", "source", "extra", "error", "traceback", "level"]] = [
+    level: str = "DEBUG",
+    traceback: Literal["attach", "extra", "drop"] = "attach",
+    colorize: bool = True,
+    remove_existing_sinks: bool = True,
+    keys: List[Literal["ts", "module", "msg", "source", "extra", "error", "traceback", "level"]] = [
 		"ts",
 		# "module", # module is skipped by default for brevity
 		"msg",
@@ -50,7 +50,7 @@ def setup_json_loguru(
 		"level",
 	],
 ):
-    """Set up loguru logger with JSON format (colored).
+    """Set up pretty-json-loguru logger.
 
     Parameters
     ----------
@@ -74,3 +74,11 @@ def setup_json_loguru(
 ## better_exceptions
 
 Install `better_exceptions` for prettier tracebacks, used by default by loguru.
+
+## License
+
+MIT License
+
+## Author
+
+Mark Lidenberg [marklidenberg@gmail.com](mailto:marklidenberg@gmail.com)

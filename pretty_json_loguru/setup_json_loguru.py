@@ -24,7 +24,7 @@ def setup_json_loguru(
         "level",
     ],
 ):
-    """Set up loguru logger with JSON format (colored).
+    """Set up pretty-json-loguru logger.
 
     Parameters
     ----------
