@@ -31,6 +31,7 @@ dev = [
     "twine>=6.1.0",
     "load-dotenv>=0.1.0",
     "questionary>=2.1.0",
+    "better-exceptions>=0.3.3",
 ]
 
 [build-system]

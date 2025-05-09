@@ -1,16 +1,28 @@
 import sys
+from typing import Literal, List
 
 from loguru import logger
 
-from pretty_json_loguru.formatters.format_as_colored_json import (
-    format_as_colored_json,
-)
+from pretty_json_loguru import pretty_json_loguru_formatter
 
 
 def setup_json_loguru(
     level: str = "DEBUG",
-    attach_raw_traceback: bool = True,
+    traceback: Literal["attach", "extra", "drop"] = "attach",
+    colorize: bool = True,
     remove_existing_sinks: bool = True,
+    keys: List[
+        Literal["ts", "module", "msg", "source", "extra", "error", "traceback", "level"]
+    ] = [
+        "ts",
+        # "module", # module is skipped by default for brevity
+        "msg",
+        "source",
+        "extra",
+        "error",
+        "traceback",
+        "level",
+    ],
 ):
     """Set up loguru logger with JSON format (colored).
 
@@ -18,11 +30,16 @@ def setup_json_loguru(
     ----------
     level : str
         Logging level
-    attach_raw_traceback : bool
-        If True, extra traceback will be appended to the log, as if we use the vanilla formatter.
+    traceback : Literal["attach", "extra", "drop"]
+        If "attach", traceback will be appended to the log, as if we use the vanilla formatter.
+        if "extra", traceback will be added to the extra field
+        if "drop", traceback will be dropped
+    colorize : bool
+        If True, colors will be added to the log. If colorize=False, vanilla traceback will be used (`traceback.format_exc()`)
+     keys : List[Literal["ts", "module", "msg", "source", "extra", "error", "traceback", "level"]]
+        List and order of keys to include in the log. `extra` is a placeholder for extra fields
     remove_existing_sinks : bool
         Whether to remove existing sinks
-
     """
     if remove_existing_sinks:
         logger.remove()
@@ -30,7 +47,8 @@ def setup_json_loguru(
     logger.add(
         sink=sys.stdout,
         level=level,
-        format=format_as_colored_json(
-            attach_raw_traceback=attach_raw_traceback,
+        format=pretty_json_loguru_formatter(
+            traceback=traceback,
+            colorize=colorize,
         ),
     )

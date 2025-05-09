@@ -84,7 +84,8 @@ def release(
     dony.shell(
         f"""
         git checkout {original_branch}
-        """
+        git merge --no-edit {original_branch} && git push
+"""
     )
 
 
