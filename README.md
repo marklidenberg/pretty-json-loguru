@@ -12,6 +12,10 @@ setup_json_loguru(level="DEBUG")
 
 ```
 
+## Why JSON logs?
+
+- Clear for developers and parsers alike.
+- Paste into any JSON viewer to expand and explore fields.
 
 ## How it looks 
 
@@ -19,14 +23,10 @@ setup_json_loguru(level="DEBUG")
 
 ![Before](docs/logger_default.png "Before")
 
+
 ### pretty-json-loguru
 
 ![After](docs/logger_pretty_json_loguru.png "After")
-
-## Why JSON logs? 
-
-- Clear for developers and parsers alike.
-- Paste into any JSON viewer to expand and explore fields.
 
 ## API
 
