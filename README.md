@@ -1,6 +1,6 @@
 # pretty-json-loguru
 
-Pretty json loguru logs. 
+Pretty json python logs with [loguru](https://github.com/Delgan/loguru).
 
 ## Basic usage 
 
