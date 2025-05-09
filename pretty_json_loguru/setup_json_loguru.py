@@ -3,7 +3,7 @@ from typing import Literal, List
 
 from loguru import logger
 
-from pretty_json_loguru import pretty_json_loguru_formatter
+from pretty_json_loguru.pretty_json_loguru_formatter import pretty_json_loguru_formatter
 
 
 def setup_json_loguru(
