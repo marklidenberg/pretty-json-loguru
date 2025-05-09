@@ -3,7 +3,7 @@ import re
 import dony
 
 
-__NAME__ = "squash:0.1.6"
+__NAME__ = "squash:0.1.7"
 
 
 @dony.command()
@@ -39,19 +39,18 @@ def squash(
         quiet=True,
     )
 
-    # - Check if merge would be possible without conflicts
+    # - Merge with target branch first
 
-    if "__CONFLICTS__" in dony.shell(
+    dony.shell(
         f"""
+        echo "merging {target_branch} to {merged_branch}"
         git fetch origin
         git checkout {target_branch}
         git pull
-        git merge-tree $(git merge-base {target_branch} {merged_branch}) {target_branch} {merged_branch} | grep -q '^<<<<<<<' && echo "__CONFLICTS__" || echo "__CLEAN_MERGE__"
         git checkout {merged_branch}
+        git merge {target_branch}
         """,
-        quiet=True,
-    ):
-        return dony.error("Merge would be conflicting, please resolve conflicts first")
+    )
 
     # - Do git diff
 
