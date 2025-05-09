@@ -1,6 +1,6 @@
 # pretty-json-loguru
 
-Pretty json python logs with [loguru](https://github.com/Delgan/loguru).
+Pretty Python JSON logs with [loguru](https://github.com/Delgan/loguru).
 
 ## Basic usage 
 
@@ -35,20 +35,20 @@ from typing import Literal, List
 
 
 def setup_json_loguru(
-        level: str = "DEBUG",
-        traceback: Literal["attach", "extra", "drop"] = "attach",
-        colorize: bool = True,
-        remove_existing_sinks: bool = True,
-        keys: List[Literal["ts", "module", "msg", "source", "extra", "error", "traceback", "level"]] = [
-            "ts",
-            # "module", # module is skipped by default for brevity
-            "msg",
-            "source",
-            "extra",
-            "error",
-            "traceback",
-            "level",
-        ],
+	level: str = "DEBUG",
+	traceback: Literal["attach", "extra", "drop"] = "attach",
+	colorize: bool = True,
+	remove_existing_sinks: bool = True,
+	keys: List[Literal["ts", "module", "msg", "source", "extra", "error", "traceback", "level"]] = [
+		"ts",
+		# "module", # module is skipped by default for brevity
+		"msg",
+		"source",
+		"extra",
+		"error",
+		"traceback",
+		"level",
+	],
 ):
     """Set up loguru logger with JSON format (colored).
 
