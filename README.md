@@ -19,12 +19,12 @@ setup_json_loguru(level="DEBUG")
 
 ## How it looks 
 
-### loguru
+### Before: loguru
 
 ![Before](docs/logger_default.png "Before")
 
 
-### pretty-json-loguru
+### After: pretty-json-loguru
 
 ![After](docs/logger_pretty_json_loguru.png "After")
 
