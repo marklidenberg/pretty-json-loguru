@@ -22,15 +22,14 @@ classifiers = [
 dependencies = [
     "loguru>=0.6.0",
     "pytest>=8.3.5",
-    "retry>=0.9.2",
 ]
 
-[project.optional-dependencies]
+[dependency-groups]
 dev = [
     "build>=1.2.2.post1",
     "twine>=6.1.0",
     "load-dotenv>=0.1.0",
-    "questionary>=2.1.0",
+    "dony>=0.1.9",
     "better-exceptions>=0.3.3",
 ]
 

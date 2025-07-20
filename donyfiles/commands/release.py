@@ -2,6 +2,8 @@ import os
 
 import dony
 
+__NAME__ = "release:0.1.0"
+
 
 @dony.command()
 def release(
@@ -9,6 +11,13 @@ def release(
     uv_publish_token: str = None,
 ):
     """Bump version and publish to PyPI"""
+
+    # - Get main branch
+
+    main_branch = dony.shell(
+        "git branch --list main | grep -q main && echo main || echo master",
+        quiet=True,
+    )
 
     # - Select default arguments
 
@@ -35,7 +44,7 @@ def release(
 
     # - Go to main
 
-    dony.shell("""
+    dony.shell(f"""
 
                 # - Exit if there are staged changes
 
@@ -43,7 +52,7 @@ def release(
 
                 # - Go to main
 
-                git checkout main
+                git checkout {main_branch}
 
                 # - Git pull
 
@@ -74,6 +83,7 @@ def release(
 
     dony.shell(
         f"""
+        rm -rf dist/* # remove old builds
         uv build
         UV_PUBLISH_TOKEN={uv_publish_token} uv publish
         """
@@ -84,8 +94,8 @@ def release(
     dony.shell(
         f"""
         git checkout {original_branch}
-        git merge --no-edit {original_branch} && git push
-"""
+        git merge --no-edit {main_branch} && git push
+        """
     )
 
 

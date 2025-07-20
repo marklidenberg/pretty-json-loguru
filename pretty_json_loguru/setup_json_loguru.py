@@ -3,7 +3,7 @@ from typing import Literal, List
 
 from loguru import logger
 
-from pretty_json_loguru import pretty_json_loguru_formatter
+from pretty_json_loguru.get_loguru_formatter import get_loguru_formatter
 
 
 def setup_json_loguru(
@@ -11,44 +11,45 @@ def setup_json_loguru(
     traceback: Literal["attach", "extra", "drop"] = "attach",
     colorize: bool = True,
     remove_existing_sinks: bool = True,
-    keys: List[
-        Literal["ts", "module", "msg", "source", "extra", "error", "traceback", "level"]
-    ] = [
-        "ts",
-        # "module", # module is skipped by default for brevity
-        "msg",
-        "source",
-        "extra",
-        "error",
-        "traceback",
-        "level",
-    ],
+    keys: List[str] = ["ts", "msg", "source", "extra", "error", "traceback", "level"],
 ):
     """Set up pretty-json-loguru logger.
 
     Parameters
     ----------
     level : str
-        Logging level
+        Logging level. One of `["DEBUG", "INFO", "SUCCESS", "WARNING", "ERROR", "CRITICAL"]`.
+
     traceback : Literal["attach", "extra", "drop"]
-        If "attach", traceback will be appended to the log, as if we use the vanilla formatter.
-        if "extra", traceback will be added to the extra field
-        if "drop", traceback will be dropped
+        "attach" appends the traceback to the log;
+        "extra" adds it to the extra field;
+        "drop" discards it.
+
     colorize : bool
-        If True, colors will be added to the log. If colorize=False, vanilla traceback will be used (`traceback.format_exc()`)
-     keys : List[Literal["ts", "module", "msg", "source", "extra", "error", "traceback", "level"]]
-        List and order of keys to include in the log. `extra` is a placeholder for extra fields
+        Adds colors to the log.
+
+    keys : List[str]
+        Keys to include in the log from the list `["ts", "msg", "source", "extra", "error", "traceback", "level", "module"]`.
+        `module` is the only key that's not included by default.
+        `extra` is a placeholder for extra fields.
+
     remove_existing_sinks : bool
-        Whether to remove existing sinks
+        Removes existing sinks.
     """
+
+    # - Remove existing sinks if needed
+
     if remove_existing_sinks:
         logger.remove()
+
+    # - Add a new sink
 
     logger.add(
         sink=sys.stdout,
         level=level,
-        format=pretty_json_loguru_formatter(
+        format=get_loguru_formatter(
             traceback=traceback,
             colorize=colorize,
+            keys=keys,
         ),
     )

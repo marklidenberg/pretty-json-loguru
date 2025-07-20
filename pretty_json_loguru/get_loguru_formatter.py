@@ -11,7 +11,7 @@ from pretty_json_loguru.get_traceback import get_traceback
 try:
     from loguru import Record
 except ImportError:
-    # for some reason, Record does not import this way in loguru 0.6.0
+    # Record does not import this way in loguru 0.6.0 for some reason
     Record = Any
 
 try:
@@ -21,49 +21,46 @@ except ImportError:
 
 BUILTIN_KEYS = [
     "ts",
-    "module",
     "msg",
     "source",
     "error",
     "traceback",
     "level",
-]  # note: extra is not included, it is a placeholder for extra fields
+    "module",
+]  # note: extra is not included, it's a placeholder for extra fields
 
 
-def pretty_json_loguru_formatter(
+def get_loguru_formatter(
     colorize: bool = True,
     traceback: Literal["attach", "extra", "drop"] = "attach",
-    keys: List[
-        Literal["ts", "module", "msg", "source", "extra", "error", "traceback", "level"]
-    ] = [
-        "ts",
-        # "module", # module is skipped by default for brevity
-        "msg",
-        "source",
-        "extra",
-        "error",
-        "traceback",
-        "level",
-    ],
+    keys: List[str] = ["ts", "msg", "source", "extra", "error", "traceback", "level"],
 ):
     """Loguru formatter builder for colored json logs.
 
     Sample output (colored in the console):
+    ```
     {"ts": "2024-07-29 08:19:03.675", "module": "format_as_colored_json", "message": "Simple message"}
     {"ts": "2024-07-29 08:19:03.675", "module": "format_as_colored_json", "message": "Message with extra", "foo": "bar"}
     {"ts": "2024-07-29 08:19:03.675", "module": "format_as_colored_json", "message": "Exception caught", "error": "ValueError: This is an exception", "traceback": "...\nValueError: This is an exception"}
+    ```
 
     Parameters
     ----------
     colorize : bool
-        If True, colors will be added to the log. If colorize=False, vanilla traceback will be used (`traceback.format_exc()`)
+        Adds colors to the log.
     traceback : Literal["attach", "extra", "drop"]
-        If "attach", traceback will be appended to the log, as if we use the vanilla formatter.
-        if "extra", traceback will be added to the extra field
-        if "drop", traceback will be dropped
-    keys : List[Literal["ts", "module", "msg", "source", "extra", "error", "traceback", "level"]]
-        List and order of keys to include in the log. `extra` is a placeholder for extra fields
+        "attach" appends the traceback to the log;
+        "extra" adds it to the extra field;
+        "drop" discards it.
+    keys : List[str]
+        Keys to include in the log from the list `["ts", "msg", "source", "extra", "error", "traceback", "level", "module"]`.
+        `module` is the only key that's not included by default.
+        `extra` is a placeholder for extra fields.
 
+    Returns
+    -------
+    Callable[[Record], str]
+        A function that formats a loguru log record as a colored JSON string.
     """
 
     # - Check traceback value
@@ -191,7 +188,11 @@ def pretty_json_loguru_formatter(
             # - Dump to json
 
             value_str = (
-                json.dumps(value, default=str, ensure_ascii=False)
+                json.dumps(
+                    value,
+                    default=str,
+                    ensure_ascii=False,
+                )
                 .replace("{", "{{")
                 .replace("}", "}}")
             )
@@ -224,7 +225,7 @@ def pretty_json_loguru_formatter(
                     "CRITICAL": "light-white",
                 }
 
-                # - Pick color
+                # - Pick a color
 
                 color_key = {
                     "ts": "green",
@@ -238,7 +239,7 @@ def pretty_json_loguru_formatter(
                     "msg": level_colors[record["level"].name],
                 }.get(key, "yellow")
 
-                # - Add colors for keys and values
+                # - Add colors to the key and value
 
                 colored_key = (
                     f'<{color_key}>"{{extra[_extra_{2 * i}]}}"</{color_key}>'
@@ -256,11 +257,11 @@ def pretty_json_loguru_formatter(
                     colored_value = f"<RED>{colored_value}</RED>"
 
                 output = output.replace(
-                    f'"{key}": {value_str}',
+                    f'"{key}":{value_str}',
                     f"{colored_key}: {colored_value}",
                 )
 
-            # - Add key and value to record, from where loguru will get them
+            # - Add the key and value to the record, from where loguru will get them
 
             if record:
                 record["extra"][f"_extra_{2 * i}"] = key
@@ -270,7 +271,7 @@ def pretty_json_loguru_formatter(
                     default=str,
                 )
 
-        # - Add traceback on new line
+        # - Add traceback on a new line
 
         if traceback == "attach" and record["exception"]:
             record["extra"]["_extra_traceback"] = get_traceback(
@@ -279,7 +280,7 @@ def pretty_json_loguru_formatter(
             )
             output += "\n{extra[_extra_traceback]}"
 
-        # - Add white color for the whole output
+        # - Add white color to the whole output
 
         return "<white>" + output + "\n" + "</white>"
 
@@ -307,12 +308,11 @@ if __name__ == "__main__":
     logger.remove()
     logger.add(
         sys.stdout,
-        format=pretty_json_loguru_formatter(
+        format=get_loguru_formatter(
             # colorize=True,
             # traceback="extra",
         ),
         level="TRACE",
     )
 
-    #
     test()

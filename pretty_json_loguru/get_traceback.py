@@ -11,15 +11,16 @@ def get_traceback(
     colorize: bool = True,
     encoding: str = "utf-8",
 ) -> str:
-    """Get formatted traceback from exception."""
+    """Get a formatted traceback from an exception."""
 
-    # - Try to get traceback from better_exceptions
+    # - Unpack exception
 
     type_, value, tb = exception
 
-    if colorize:
-        # - Built in loguru formatter
+    # - Get traceback
 
+    if colorize:
+        # Use built-in loguru formatter
         return "".join(
             ExceptionFormatter(
                 colorize=colorize,
@@ -31,8 +32,7 @@ def get_traceback(
             ).format_exception(type_, value, tb)
         )
     else:
-        # - Use builtin traceback, because loguru fails with colorize=False if 'module' is present (# TODO later: investigate)
-
+        # Use builtin traceback, because loguru fails with colorize=False if 'module' is present (# TODO later: investigate)
         return traceback.format_exc()
 
 

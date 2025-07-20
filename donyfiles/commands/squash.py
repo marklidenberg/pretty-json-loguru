@@ -3,7 +3,7 @@ import re
 import dony
 
 
-__NAME__ = "squash:0.1.4"
+__NAME__ = "squash:0.1.8"
 
 
 @dony.command()
@@ -16,11 +16,23 @@ def squash(
 ):
     """Squashes current branch to main, checkouts to a new branch"""
 
+    # - Get target branch
+
+    target_branch = target_branch or dony.input(
+        "Enter target branch:",
+        default=dony.shell(
+            "git branch --list main | grep -q main && echo main || echo master",
+            quiet=True,
+        ),
+    )
+
+    # - Get github username
+
+    github_username = dony.shell("git config --get user.name", quiet=True)
+
     # - Get default branch if not set
 
-    new_branch = (
-        new_branch or f"workflow_{dony.shell('date +%Y%m%d_%H%M%S', quiet=True)}"
-    )
+    new_branch = new_branch or f"{github_username}-flow"
 
     # - Get current branch
 
@@ -29,18 +41,30 @@ def squash(
         quiet=True,
     )
 
-    # - Look for main/master branch
+    # - Merge with target branch first
 
-    main_or_master_branch = dony.shell(
-        "git branch --list main | grep -q main && echo main || echo master",
-        quiet=True,
-    )
+    dony.shell(
+        f"""
 
-    # - Get target branch
+        # push if there are unpushed commits
+        git diff --name-only | grep -q . && git push
+        
+        git fetch origin
+        git checkout {target_branch}
+        git pull
+        git checkout {merged_branch}
 
-    target_branch = target_branch or dony.input(
-        "Enter target branch:",
-        default=main_or_master_branch,
+        git merge {target_branch}
+        
+        if ! git diff-index --quiet HEAD --; then
+
+          # try to commit twice, in case of formatting errors that are fixed by the first commit
+          git commit -m "Merge with target branch" || git commit -m "Merge with target branch"
+          git push
+        else
+          echo "Nothing merged – no commit made."
+        fi
+        """,
     )
 
     # - Do git diff
@@ -62,7 +86,7 @@ def squash(
 
     # Ask user to confirm
 
-    dony.confirm("Start squashing?", default=False)
+    dony.confirm("Start squashing?")
 
     # - Check if target branch exists
 
@@ -129,7 +153,9 @@ def squash(
         # - Merge
 
         git merge --squash {merged_branch}
-        git commit -m "{commit_message}"
+        
+        # try to commit twice, in case of formatting errors that are fixed by the first commit
+        git commit -m "{commit_message}" || git commit -m "{commit_message}"
         git push 
 
         # - Remove merged branch
