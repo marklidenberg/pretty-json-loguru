@@ -257,7 +257,7 @@ def get_loguru_formatter(
                     colored_value = f"<RED>{colored_value}</RED>"
 
                 output = output.replace(
-                    f'"{key}":{value_str}',
+                    f'"{key}": {value_str}',
                     f"{colored_key}: {colored_value}",
                 )
 
