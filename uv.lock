@@ -266,7 +266,7 @@ wheels = [
 
 [[package]]
 name = "dony"
-version = "0.1.9"
+version = "0.1.10"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "jprint2" },
@@ -274,9 +274,9 @@ dependencies = [
     { name = "pyperclip" },
     { name = "questionary" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/05/ba/72075e07911c7056e65d3206966856ed82cbb481a9c54be899d3e81f5137/dony-0.1.9.tar.gz", hash = "sha256:56b30c915e71599d059059ca2370221ab2d974adedeff825e2f1c99705dd64a1", size = 54154, upload-time = "2025-07-05T17:06:12.702Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/52/69/e0801086941a3786f35bb42e983cb9695be7a4a82b7d56dabf310509309f/dony-0.1.10.tar.gz", hash = "sha256:ac3af559328624c0d0934debc702e9c7d6522cb7cd391b6e76f6a0168870ea48", size = 50584, upload-time = "2025-08-09T16:24:04.193Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/6d/64/9a484e2f6e8536162d18e34666c659e8d22f9783a533de2a53156e3ab5d8/dony-0.1.9-py3-none-any.whl", hash = "sha256:4956740a2c78f5ec8fcbac503228ebdf82ed33aa341b487a1d13c1b670e8ba2e", size = 22344, upload-time = "2025-07-05T17:06:11.199Z" },
+    { url = "https://files.pythonhosted.org/packages/bc/39/a130b0541a3970776dd3ae385c734ba3a3afe1323d126111d2e6bbab0d84/dony-0.1.10-py3-none-any.whl", hash = "sha256:6a5946dd3e75e1a4bf7f4aab335383e45fc58487aa2a789797c4877ebf552b47", size = 22190, upload-time = "2025-08-09T16:24:02.584Z" },
 ]
 
 [[package]]
@@ -597,9 +597,10 @@ wheels = [
 
 [[package]]
 name = "pretty-json-loguru"
-version = "0.2.2"
+version = "0.2.3"
 source = { editable = "." }
 dependencies = [
+    { name = "dony" },
     { name = "loguru" },
     { name = "pytest" },
 ]
@@ -615,6 +616,7 @@ dev = [
 
 [package.metadata]
 requires-dist = [
+    { name = "dony", specifier = "==0.1.10" },
     { name = "loguru", specifier = ">=0.6.0" },
     { name = "pytest", specifier = ">=8.3.5" },
 ]
