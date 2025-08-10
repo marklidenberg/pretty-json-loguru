@@ -266,7 +266,7 @@ wheels = [
 
 [[package]]
 name = "dony"
-version = "0.1.10"
+version = "0.2.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "jprint2" },
@@ -274,9 +274,9 @@ dependencies = [
     { name = "pyperclip" },
     { name = "questionary" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/52/69/e0801086941a3786f35bb42e983cb9695be7a4a82b7d56dabf310509309f/dony-0.1.10.tar.gz", hash = "sha256:ac3af559328624c0d0934debc702e9c7d6522cb7cd391b6e76f6a0168870ea48", size = 50584, upload-time = "2025-08-09T16:24:04.193Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/5d/1c/2c057751b07516b1e7e70f71795b7d6a8fc637409d5b966f1b39c8558c42/dony-0.2.0.tar.gz", hash = "sha256:190f618aedf6d166ddc4330db187b529d861c17cf84921a711d5416e578bda88", size = 50762, upload-time = "2025-08-10T10:20:05.954Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/bc/39/a130b0541a3970776dd3ae385c734ba3a3afe1323d126111d2e6bbab0d84/dony-0.1.10-py3-none-any.whl", hash = "sha256:6a5946dd3e75e1a4bf7f4aab335383e45fc58487aa2a789797c4877ebf552b47", size = 22190, upload-time = "2025-08-09T16:24:02.584Z" },
+    { url = "https://files.pythonhosted.org/packages/c9/8f/f734f2d906bdcea8c284dad96623c979d397324e1d1e5fbb846b635c9ce8/dony-0.2.0-py3-none-any.whl", hash = "sha256:867835e3ce776d5e686345a0aa1aef1f1b75a25c22c22d69b5f7cd2c856eb9fa", size = 22535, upload-time = "2025-08-10T10:20:04.62Z" },
 ]
 
 [[package]]
@@ -616,7 +616,7 @@ dev = [
 
 [package.metadata]
 requires-dist = [
-    { name = "dony", specifier = "==0.1.10" },
+    { name = "dony", specifier = ">=0.2.0" },
     { name = "loguru", specifier = ">=0.6.0" },
     { name = "pytest", specifier = ">=8.3.5" },
 ]

@@ -20,7 +20,7 @@ classifiers = [
     "Programming Language :: Python :: 3.13",
 ]
 dependencies = [
-    "dony==0.1.10",
+    "dony>=0.2.0",
     "loguru>=0.6.0",
     "pytest>=8.3.5",
 ]
