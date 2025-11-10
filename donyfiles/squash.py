@@ -19,12 +19,13 @@ def squash(
 
     # - Get target branch
 
-    target_branch = dony.input(
+    target_branch = dony.input(  # type: ignore[attr-defined]
         "Enter target branch:",
         default=dony.shell(
             "git branch --list main | grep -q main && echo main || echo master",
             quiet=True,
-        ),
+        )
+        or "",
         provided=target_branch,
     )
 
@@ -107,30 +108,30 @@ def squash(
 
     if not commit_message:
         while True:
-            commit_message = dony.input(
+            commit_message = dony.input(  # type: ignore[attr-defined]
                 f"Enter commit message for merging branch {merged_branch} to {target_branch}:"
             )
-            if bool(
+            if commit_message and bool(
                 re.match(
                     r"^(?:(?:feat|fix|docs|style|refactor|perf|test|chore|build|ci|revert)(?:\([A-Za-z0-9_-]+\))?(!)?:)\s.+$",
                     commit_message.splitlines()[0],
                 )
             ):
                 break
-            dony.print("Only conventional commits are allowed, try again")
+            dony.print("Only conventional commits are allowed, try again")  # type: ignore[attr-defined]
 
     # - Check if user wants to checkout to a new branch
 
-    checkout_to_new_branch = dony.confirm(
+    checkout_to_new_branch = dony.confirm(  # type: ignore[call-arg]
         f"Checkout to new branch {new_branch}?",
-        provided=checkout_to_new_branch,
+        provided=checkout_to_new_branch,  # pyright: ignore[reportCallIssue]
     )
 
     # - Check if user wants to remove merged branch
 
-    remove_merged_branch = dony.confirm(
+    remove_merged_branch = dony.confirm(  # type: ignore[call-arg]
         f"Remove merged branch {merged_branch}?",
-        provided=remove_merged_branch,
+        provided=remove_merged_branch,  # pyright: ignore[reportCallIssue]
     )
 
     # - Do the process

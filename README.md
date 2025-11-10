@@ -5,14 +5,12 @@ Pretty Python JSON logs with [loguru](https://github.com/Delgan/loguru).
 ## Basic usage 
 
 ```python
-
 from loguru import logger
-from pretty_json_loguru import setup_json_loguru
+from pretty_json_loguru import configure_logger
 
-setup_json_loguru(level="DEBUG")
+configure_logger(level="DEBUG")
 
-loguru.debug("Hello", who="Friend!")
-
+logger.debug("Hello", who="Friend!")
 ```
 
 ## Why JSON logs?
@@ -33,38 +31,53 @@ loguru.debug("Hello", who="Friend!")
 
 ## API
 
+### configure_logger
+
 ```python
-
-def setup_json_loguru(
+def configure_logger(
     level: str = "DEBUG",
-    traceback: Literal["attach", "extra", "drop"] = "attach",
     colorize: bool = True,
+    include_traceback: bool = False,
+    print_traceback_below: bool = True,
+    indent: bool = False,
     remove_existing_sinks: bool = True,
-    keys: List[str] = ["ts", "msg", "source", "extra", "error", "traceback", "level"],
+    keys: List[LogKey] = ["ts", "msg", "source", "extra", "error", "traceback", "level"],
 ):
-    """Set up pretty-json-loguru logger.
+    """Configure the Loguru logger with JSON formatting.
 
-    Parameters
-    ----------
-    level : str
-        Logging level. One of `["DEBUG", "INFO", "SUCCESS", "WARNING", "ERROR", "CRITICAL"]`.
-    
-    traceback : Literal["attach", "extra", "drop"]
-        "attach" appends the traceback to the log;
-        "extra" adds it to the extra field;
-        "drop" discards it.
-    
-    colorize : bool
-        Adds colors to the log.
-    
-    keys : List[str]
-        Keys to include in the log from the list `["ts", "msg", "source", "extra", "error", "traceback", "level", "module"]`.
-        `module` is the only key that's not included by default.
-        `extra` is a placeholder for extra fields.
+    Args:
+        level: Logging level. One of ["DEBUG", "INFO", "SUCCESS", "WARNING", "ERROR", "CRITICAL"].
+        colorize: Adds colors to the log.
+        include_traceback: Adds "error" and "traceback" fields to JSON when exceptions occur.
+        print_traceback_below: Prints full traceback below the JSON line.
+        indent: Formats JSON with indentation for readability.
+        remove_existing_sinks: Removes existing sinks.
+        keys: Keys to include in the log. Available: "ts", "msg", "source", "extra", "error", "traceback", "level", "module", "function", "filename", "line", "process_name", "process_id", "thread_name", "thread_id", "name".
+    """
+```
 
-    remove_existing_sinks : bool
-        Removes existing sinks.
-...
+### create_json_formatter
+
+```python
+def create_json_formatter(
+    colorize: bool = True,
+    include_traceback: bool = False,
+    print_traceback_below: bool = True,
+    indent: bool = False,
+    keys: List[LogKey] = ["ts", "msg", "source", "extra", "error", "traceback", "level"],
+):
+    """Create a JSON formatter for Loguru with optional colorization.
+
+    Args:
+        colorize: Adds colors to the log.
+        include_traceback: Adds "error" and "traceback" fields to JSON when exceptions occur.
+        print_traceback_below: Prints full traceback below the JSON line.
+        indent: Formats JSON with indentation for readability.
+        keys: Keys to include in the log. Available: "ts", "msg", "source", "extra", "error", "traceback", "level", "module", "function", "filename", "line", "process_name", "process_id", "thread_name", "thread_id", "name".
+
+    Returns:
+        A function that formats a loguru log record as a colored JSON string.
+    """
 ```
 
 

@@ -5,7 +5,7 @@ try:
 except Exception:
     __version__ = "unknown"
 
-from .get_loguru_formatter import get_loguru_formatter
-from .setup_json_loguru import setup_json_loguru
+from .create_json_formatter import create_json_formatter
+from .configure_logger import configure_logger
 
-__all__ = ["get_loguru_formatter", "setup_json_loguru"]
+__all__ = ["create_json_formatter", "configure_logger"]

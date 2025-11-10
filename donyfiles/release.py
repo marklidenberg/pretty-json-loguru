@@ -22,17 +22,17 @@ def release(
 
     # - Select default arguments
 
-    version = dony.select(
+    version = dony.select(  # type: ignore[call-arg]
         "Choose version",
         choices=[
             "patch",
             "minor",
             "major",
         ],
-        provided=version,
+        provided=version,  # pyright: ignore[reportCallIssue]
     )
 
-    uv_publish_token = dony.input(
+    uv_publish_token = dony.input(  # type: ignore[attr-defined]
         "Enter UV publish token (usually a PyPI token)",
         default=os.getenv("UV_PUBLISH_TOKEN", ""),
         provided=uv_publish_token,

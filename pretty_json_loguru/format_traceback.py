@@ -2,16 +2,16 @@ import sys
 import traceback
 from typing import Any
 
-from loguru import _defaults, logger
+from loguru import logger
 from loguru._better_exceptions import ExceptionFormatter
 
 
-def get_traceback(
+def format_traceback(
     exception: Any,
     colorize: bool = True,
     encoding: str = "utf-8",
 ) -> str:
-    """Get a formatted traceback from an exception."""
+    """Format a traceback from an exception."""
 
     # - Unpack exception
 
@@ -32,16 +32,16 @@ def get_traceback(
             ).format_exception(type_, value, tb)
         )
     else:
-        # Use builtin traceback, because loguru fails with colorize=False if 'module' is present (# TODO later: investigate)
+        # Use builtin traceback, because loguru fails with colorize=False if 'module' is present (# todo later: investigate)
         return traceback.format_exc()
 
 
-def test():
+def example():
     try:
         raise Exception("test")
     except Exception:
         print(
-            get_traceback(
+            format_traceback(
                 exception=sys.exc_info(),
                 colorize=False,
             ),
@@ -49,4 +49,4 @@ def test():
 
 
 if __name__ == "__main__":
-    test()
+    example()
