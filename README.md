@@ -65,7 +65,7 @@ def create_json_formatter(
     print_traceback_below: bool = True,
     indent: bool = False,
     keys: List[LogKey] = ["ts", "msg", "source", "extra", "error", "traceback", "level"],
-):
+) -> Callable[["Record"], str]:
     """Create a JSON formatter for Loguru with optional colorization.
 
     Args:
