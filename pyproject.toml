@@ -23,7 +23,7 @@ dependencies = [
     "loguru>=0.6.0",
 ]
 
-[project.optional-dependencies]
+[dependency-groups]
 dev = [
     "build>=1.2.2.post1",
     "twine>=6.1.0",
