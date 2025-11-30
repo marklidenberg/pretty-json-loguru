@@ -2,7 +2,7 @@
 
 Pretty Python JSON logs with [loguru](https://github.com/Delgan/loguru).
 
-## Basic usage 
+## Basic usage
 
 ```python
 from loguru import logger
@@ -18,16 +18,15 @@ logger.debug("Hello", who="Friend!")
 - Optimized for both developers and automated parsers
 - Load large logs into any JSON viewer to expand and inspect every field
 
-## How it looks 
+## How it looks
 
-### Vanilla loguru
+### Vanilla loguru (before)
 
-![Before](docs/logger_default.png "Before")
+![Before](docs/before.png "Before")
 
+### pretty-json-loguru (after)
 
-### pretty-json-loguru
-
-![After](docs/logger_pretty_json_loguru.png "After")
+![After](docs/after.png "After")
 
 ## API
 
@@ -65,7 +64,7 @@ def create_json_formatter(
     print_traceback_below: bool = True,
     indent: bool = False,
     keys: List[LogKey] = ["ts", "msg", "source", "extra", "error", "traceback", "level"],
-):
+) -> Callable[["Record"], str]:
     """Create a JSON formatter for Loguru with optional colorization.
 
     Args:
@@ -79,7 +78,6 @@ def create_json_formatter(
         A function that formats a loguru log record as a colored JSON string.
     """
 ```
-
 
 ## better_exceptions
 

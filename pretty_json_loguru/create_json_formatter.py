@@ -2,7 +2,7 @@ import sys
 
 from collections import OrderedDict
 from datetime import datetime
-from typing import Any, Literal, List, Dict, TYPE_CHECKING, cast
+from typing import Any, Literal, List, Dict, TYPE_CHECKING, cast, Callable
 
 from loguru import logger
 
@@ -62,7 +62,7 @@ def create_json_formatter(
             "level",
         ],
     ),
-):
+) -> Callable[["Record"], str]:
     """Create a JSON formatter for Loguru with optional colorization.
 
     Args:
@@ -366,7 +366,7 @@ def example():
         format=create_json_formatter(
             colorize=True,
             include_traceback=False,
-            print_traceback_below=False,
+            print_traceback_below=True,
         ),
         level="TRACE",
     )
