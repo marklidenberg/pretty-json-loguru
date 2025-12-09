@@ -2,6 +2,12 @@
 
 Pretty Python JSON logs with [loguru](https://github.com/Delgan/loguru).
 
+## Installation
+
+```bash
+pip install pretty-json-loguru
+```
+
 ## Basic usage
 
 ```python
@@ -78,10 +84,6 @@ def create_json_formatter(
         A function that formats a loguru log record as a colored JSON string.
     """
 ```
-
-## better_exceptions
-
-Install [better-exceptions](https://github.com/Qix-/better-exceptions) for prettier tracebacks (used by default in loguru if installed)
 
 ## License
 
