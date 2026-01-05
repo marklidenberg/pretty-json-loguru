@@ -21,6 +21,7 @@ classifiers = [
 ]
 dependencies = [
     "loguru>=0.6.0",
+    "marklidenberg-donyfiles==0.3.1",
 ]
 
 [dependency-groups]
@@ -29,6 +30,7 @@ dev = [
     "twine>=6.1.0",
     "dony>=0.2.0",
     "pytest>=8.3.5",
+    "marklidenberg-donyfiles>=0.3.0",
 ]
 
 [build-system]
