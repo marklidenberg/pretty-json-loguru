@@ -20,18 +20,18 @@ classifiers = [
     "Programming Language :: Python :: 3.13",
 ]
 dependencies = [
-    "dony>=0.5.1",
     "loguru>=0.6.0",
-    "marklidenberg-donyfiles>=0.4.0",
 ]
 
 [dependency-groups]
 dev = [
     "build>=1.2.2.post1",
     "twine>=6.1.0",
-    "dony>=0.2.0",
+    "dony>=0.5.1",
     "pytest>=8.3.5",
-    "marklidenberg-donyfiles>=0.3.0",
+    "marklidenberg-donyfiles>=0.4.0",
+    "ty>=0.0.14",
+    "fire>=0.7.0",
 ]
 
 [build-system]

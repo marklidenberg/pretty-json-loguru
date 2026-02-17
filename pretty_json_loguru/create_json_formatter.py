@@ -38,11 +38,11 @@ if TYPE_CHECKING:
     except ImportError:
         # Record does not import this way in loguru 0.6.0 for some reason
         # Use Dict[str, Any] as a fallback type for type checking
-        Record = Dict[str, Any]
+        Record = Dict[str, Any]  # type: ignore[misc, assignment]
 
 # Valid keys that can be included in log output (see LogKey type)
 # "extra" is a special placeholder for extra fields
-VALID_LOG_KEYS = list(LogKey.__args__)  # type: ignore[attr-defined]
+VALID_LOG_KEYS = list(LogKey.__args__)
 
 
 def create_json_formatter(
@@ -78,7 +78,7 @@ def create_json_formatter(
 
     # - Define output formatter
 
-    def _format_as_json_colored(record: "Record"):  # type: ignore[name-defined]
+    def _format_as_json_colored(record: "Record"):
         """
         record:
             {
